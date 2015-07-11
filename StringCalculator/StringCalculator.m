@@ -3,49 +3,48 @@
 
 @implementation StringCalculator
 
-- (int)add:(NSString*)valuesToAdd
+- (int)add:(NSString*)input
 {
-    NSString* delimiter = [self defineDelimiter:valuesToAdd];
-    NSCharacterSet* setOfCharacter = [NSCharacterSet characterSetWithCharactersInString:delimiter];
-    NSArray* stringNumbers = [valuesToAdd componentsSeparatedByCharactersInSet:setOfCharacter];
-    
-    NSMutableArray* negativesNumbers = [NSMutableArray array];
+    NSString* delimiter = [self parseDelimiter:input];
+    NSCharacterSet* delimiters = [NSCharacterSet characterSetWithCharactersInString:delimiter];
+    NSArray* inputNumbers = [input componentsSeparatedByCharactersInSet:delimiters];
+    NSMutableString* negativesNumbers = [NSMutableString string];
     int total = 0;
-    for (NSString* stringNumber in stringNumbers)
+    
+    for (NSString* inputNumber in inputNumbers)
     {
-        int number = [stringNumber intValue];
+        int number = [inputNumber intValue];
         
         if(number < 0)
         {
-            [negativesNumbers addObject:stringNumber];
+            [negativesNumbers appendString:inputNumber];
         }
         else
         {
             total += number;
         }
     }
-    [self composeException:negativesNumbers];
+    
+    if([negativesNumbers length] > 0)
+    {
+        [NSException raise:@"Invalid values" format:@"Negatives not allowed %@", negativesNumbers];
+    }
     
     return total;
 }
 
--(NSString*)defineDelimiter:(NSString*)values
+-(NSString*)parseDelimiter:(NSString*)input
 {
-    NSRange start = [values rangeOfString:@"//"];
-    NSRange end = [values rangeOfString:@"\n"];
+    NSRange start = [input rangeOfString:@"//"];
+    NSRange end = [input rangeOfString:@"\n"];
+    
     if(start.location != NSNotFound && end.location != NSNotFound)
     {
-        return [values substringToIndex:end.location + 1];
+        return [input substringToIndex:end.location + 1];
     }
-    return @"\n,";
-}
-
-- (void)composeException:(NSMutableArray *)negativesNumbers
-{
-    if([negativesNumbers count] > 0)
+    else
     {
-        NSString* exceptionValues = [negativesNumbers componentsJoinedByString:@", "];
-        [NSException raise:@"Invalid values" format:@"Negatives not allowed %@", exceptionValues];
+        return @"\n,";
     }
 }
 
