@@ -50,4 +50,18 @@ StringCalculator* calculator;
     XCTAssertEqual(result, 6);
 }
 
+- (void)testThatReturnsTheSumOfNumbersWithNewLineCharacter
+{
+    int result = [calculator add:@"1\n2,3"];
+    
+    XCTAssertEqual(result, 6);
+}
+
+- (void)testThatReturnsTheSumOfNumbersWithPredefineDelimiter
+{
+    int result = [calculator add:@"//;\n1;2"];
+    
+    XCTAssertEqual(result, 3);
+}
+
 @end
