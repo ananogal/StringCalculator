@@ -18,6 +18,6 @@ FOUNDATION_EXPORT const unsigned char StringCalculatorVersionString[];
 
 @interface StringCalculator : NSObject
 
-- (int)add:(NSString*)values;
+- (int)add:(NSString*)valuesToAdd;
 @end
 

@@ -3,15 +3,30 @@
 
 @implementation StringCalculator
 
-- (int)add:(NSString*)values
+- (int)add:(NSString*)valuesToAdd
 {
-    NSString* delimiter = [self defineDelimiter:values];
+    NSString* delimiter = [self defineDelimiter:valuesToAdd];
     NSCharacterSet* setOfCharacter = [NSCharacterSet characterSetWithCharactersInString:delimiter];
-    NSArray* numbers = [values componentsSeparatedByCharactersInSet:setOfCharacter];
+    NSArray* stringNumbers = [valuesToAdd componentsSeparatedByCharactersInSet:setOfCharacter];
+    
+    NSMutableArray* negativesNumbers = [NSMutableArray array];
     int total = 0;
-    for (NSString* number in numbers)
+    for (NSString* stringNumber in stringNumbers)
     {
-        total +=[number intValue];
+        int number = [stringNumber intValue];
+        if(number < 0)
+        {
+            [negativesNumbers addObject:stringNumber];
+        }
+        else
+        {
+            total += number;
+        }
+    }
+    if([negativesNumbers count] > 0)
+    {
+        NSString* exceptionValues = [negativesNumbers componentsJoinedByString:@", "];
+        [NSException raise:@"Invalid values" format:@"Negatives not allowed %@", exceptionValues];
     }
     
     return total;
