@@ -73,13 +73,13 @@ StringCalculator* calculator;
 {
     NSString* message = @"";
     @try {
-        [calculator add:@"1,-3,-4"];
+        [calculator add:@"1,-3, -4"];
     }
     @catch (NSException *exception) {
         message = exception.description;
     }
     @finally {
-        XCTAssertTrue([message isEqualToString:@"Negatives not allowed -3, -4"]);
+        XCTAssertTrue([message isEqualToString:@"Negatives not allowed -3 -4"]);
     }
 }
 @end

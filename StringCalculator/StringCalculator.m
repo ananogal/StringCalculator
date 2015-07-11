@@ -8,7 +8,7 @@
     NSString* delimiter = [self parseDelimiter:input];
     NSCharacterSet* delimiters = [NSCharacterSet characterSetWithCharactersInString:delimiter];
     NSArray* inputNumbers = [input componentsSeparatedByCharactersInSet:delimiters];
-    NSMutableString* negativesNumbers = [NSMutableString string];
+    NSString* negativesNumbers = @"";
     int total = 0;
     
     for (NSString* inputNumber in inputNumbers)
@@ -17,7 +17,7 @@
         
         if(number < 0)
         {
-            [negativesNumbers appendString:inputNumber];
+            negativesNumbers = [NSString stringWithFormat:@"%@%@", negativesNumbers, inputNumber];
         }
         else
         {
