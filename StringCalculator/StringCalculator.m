@@ -14,6 +14,7 @@
     for (NSString* stringNumber in stringNumbers)
     {
         int number = [stringNumber intValue];
+        
         if(number < 0)
         {
             [negativesNumbers addObject:stringNumber];
@@ -23,11 +24,7 @@
             total += number;
         }
     }
-    if([negativesNumbers count] > 0)
-    {
-        NSString* exceptionValues = [negativesNumbers componentsJoinedByString:@", "];
-        [NSException raise:@"Invalid values" format:@"Negatives not allowed %@", exceptionValues];
-    }
+    [self composeException:negativesNumbers];
     
     return total;
 }
@@ -40,9 +37,15 @@
     {
         return [values substringToIndex:end.location + 1];
     }
-    else
+    return @"\n,";
+}
+
+- (void)composeException:(NSMutableArray *)negativesNumbers
+{
+    if([negativesNumbers count] > 0)
     {
-        return @"\n,";
+        NSString* exceptionValues = [negativesNumbers componentsJoinedByString:@", "];
+        [NSException raise:@"Invalid values" format:@"Negatives not allowed %@", exceptionValues];
     }
 }
 
