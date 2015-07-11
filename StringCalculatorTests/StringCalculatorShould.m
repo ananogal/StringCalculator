@@ -1,11 +1,3 @@
-//
-//  StringCalculatorTests.m
-//  StringCalculatorTests
-//
-//  Created by Ana Nogal on 11/07/2015.
-//  Copyright (c) 2015 Ana Nogal. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "StringCalculator.h"
@@ -16,23 +8,46 @@
 
 @implementation StringCalculatorShould
 
-- (void)setUp {
+StringCalculator* calculator;
+
+- (void)setUp
+{
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    calculator = [[StringCalculator alloc] init];
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+- (void)tearDown
+{
+    calculator = nil;
     [super tearDown];
 }
 
-- (void)testThatEmptyStringEqualZero{
-    
-    StringCalculator* calculator = [[StringCalculator alloc] init];
-    
+- (void)testThatReturnsZeroForEmptyString
+{
     int result = [calculator add:@""];
     
     XCTAssertEqual(result, 0);
+}
+
+- (void)testThatReturnItSelfForOneNumber
+{
+    int result = [calculator add:@"1"];
+    
+    XCTAssertEqual(result, 1);
+}
+
+- (void)testThatReturnsTheSumOf2Numbers
+{
+    int result = [calculator add:@"1,2"];
+    
+    XCTAssertEqual(result, 3);
+}
+
+- (void)testThatReturnsTheSumOfAllNumbersInString
+{
+    int result = [calculator add:@"1,2,3"];
+    
+    XCTAssertEqual(result, 6);
 }
 
 @end

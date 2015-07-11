@@ -5,7 +5,14 @@
 
 - (int)add:(NSString*)values
 {
-    return 0;
+    NSArray* numbers = [values componentsSeparatedByString:@","];
+    int total = 0;
+    for (NSString* number in numbers)
+    {
+        total +=[number intValue];
+    }
+    
+    return total;
 }
 
 @end
